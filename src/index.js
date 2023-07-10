@@ -25,15 +25,16 @@ function getData(req, res) {
 // } else {
 // res.send({ 'status': 'not authorized' });
 // }
-  res.send('function working');
+  let s=structureData(req,res);
+  res.send(s);
 }
-// function structureData(data) {
-// let data = {};
-// data["GET"] = req.query;
-// data["headers"] = req.headers;
-// data["env"] = process.env;
-// return data;
-// }
+function structureData(req,res) {
+let data = {};
+data["GET"] = req.query;
+data["headers"] = req.headers;
+data["env"] = process.env;
+return data;
+}
 
 // function authenticateUser(data) {
 // // Perform user authentication here
