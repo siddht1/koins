@@ -16,21 +16,47 @@ app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
 // GET route
-app.get("/", (req, res) => {
-  let data = {};
-  data["GET"] = req.query;
-  data["headers"]=req.headers;
-  data["env"]=process.env;
-if(data['GET']['user']==='st1')
-{
-  res.send(data);
+app.get("/", getData);
+function getData(req, res) {
+
+data = structureData(data);
+if (authenticateUser(data)) {
+res.send(data);
+} else {
+res.send({ 'status': 'not authorized' });
 }
-  else
-{
-  res.send({'status':'not authorized'});
+}
+function structureData(data) {
+let data = {};
+data["GET"] = req.query;
+data["headers"] = req.headers;
+data["env"] = process.env;
+return data;
 }
 
-});
+function authenticateUser(data) {
+// Perform user authentication here
+if (data['GET']['user'] === 'st1') {
+return true;
+} else {
+return false;
+}
+}
+// app.get("/", (req, res) => {
+//   let data = {};
+//   data["GET"] = req.query;
+//   data["headers"]=req.headers;
+//   data["env"]=process.env;
+// if(data['GET']['user']==='st1')
+// {
+//   res.send(data);
+// }
+//   else
+// {
+//   res.send({'status':'not authorized'});
+// }
+
+// });
 
 // POST route
 app.post("/", (req, res) => {
