@@ -19,29 +19,30 @@ app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 app.get("/", getData);
 function getData(req, res) {
 
-data = structureData(data);
-if (authenticateUser(data)) {
-res.send(data);
-} else {
-res.send({ 'status': 'not authorized' });
+//data = structureData(data);
+// if (authenticateUser(data)) {
+// res.send(data);
+// } else {
+// res.send({ 'status': 'not authorized' });
+// }
+  res.send('function working');
 }
-}
-function structureData(data) {
-let data = {};
-data["GET"] = req.query;
-data["headers"] = req.headers;
-data["env"] = process.env;
-return data;
-}
+// function structureData(data) {
+// let data = {};
+// data["GET"] = req.query;
+// data["headers"] = req.headers;
+// data["env"] = process.env;
+// return data;
+// }
 
-function authenticateUser(data) {
-// Perform user authentication here
-if (data['GET']['user'] === 'st1') {
-return true;
-} else {
-return false;
-}
-}
+// function authenticateUser(data) {
+// // Perform user authentication here
+// if (data['GET']['user'] === 'st1') {
+// return true;
+// } else {
+// return false;
+// }
+// }
 // app.get("/", (req, res) => {
 //   let data = {};
 //   data["GET"] = req.query;
