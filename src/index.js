@@ -22,78 +22,77 @@ const auth = new google.auth.GoogleAuth({
 // Create a client instance
 (async () => {
   const client = await auth.getClient();
-  // Rest of your code that uses the client
-})();
 
-// Create Google Sheets API instance
-const sheets = google.sheets({ version: "v4", auth: client });
+  // Create Google Sheets API instance
+  const sheets = google.sheets({ version: "v4", auth: client });
 
-// Enable CORS for specific origin
-app.use(cors());
+  // Enable CORS for specific origin
+  app.use(cors());
 
-// Parse request body and extended the size to 1mb
-app.use(bodyParser.json({ limit: '1mb' }));
-app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
+  // Parse request body and extended the size to 1mb
+  app.use(bodyParser.json({ limit: '1mb' }));
+  app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
-const spreadsheetId = process.env.SPREADSHEET_ID;
+  const spreadsheetId = process.env.SPREADSHEET_ID;
 
-// GET route
-app.get("/", getData);
+  // GET route
+  app.get("/", getData);
 
-async function getData(req, res) {
-  const data = structureData(req, res);
+  async function getData(req, res) {
+    const data = structureData(req, res);
 
-  // Prepare the data to be written to the Google Sheet
-  const values = [
-    ["GET Data", JSON.stringify(data.GET)],
-    ["Headers", JSON.stringify(data.headers)],
-    ["Environment Variables", JSON.stringify(data.env)],
-    ["Date", data.date],
-    ["Time", data.time],
-  ];
+    // Prepare the data to be written to the Google Sheet
+    const values = [
+      ["GET Data", JSON.stringify(data.GET)],
+      ["Headers", JSON.stringify(data.headers)],
+      ["Environment Variables", JSON.stringify(data.env)],
+      ["Date", data.date],
+      ["Time", data.time],
+    ];
 
-  const range = "Sheet1!A1:B5";
-  const resource = {
-    values: values,
-  };
+    const range = "Sheet1!A1:B5";
+    const resource = {
+      values: values,
+    };
 
-  try {
-    // Write data to Google Sheet
-    const response = await sheets.spreadsheets.values.update({
-      spreadsheetId: spreadsheetId,
-      range: range,
-      valueInputOption: "USER_ENTERED",
-      resource: resource,
-    });
+    try {
+      // Write data to Google Sheet
+      const response = await sheets.spreadsheets.values.update({
+        spreadsheetId: spreadsheetId,
+        range: range,
+        valueInputOption: "USER_ENTERED",
+        resource: resource,
+      });
 
-    console.log("Data written successfully:", response.data);
-    res.send(data);
-  } catch (error) {
-    console.error("Error writing data to Google Sheet:", error);
-    res.status(500).send("Error writing data to Google Sheet");
+      console.log("Data written successfully:", response.data);
+      res.send(data);
+    } catch (error) {
+      console.error("Error writing data to Google Sheet:", error);
+      res.status(500).send("Error writing data to Google Sheet");
+    }
   }
-}
 
-function structureData(req, res) {
-  const currentDate = new Date();
-  let data = {};
-  data["GET"] = req.query;
-  data["headers"] = req.headers;
-  data["env"] = process.env;
-  data["date"] = currentDate.toDateString();
-  const options = { timeZone: "Asia/Kolkata" };
-  data["time"] = currentDate.toLocaleString("en-US", options);
-  return data;
-}
+  function structureData(req, res) {
+    const currentDate = new Date();
+    let data = {};
+    data["GET"] = req.query;
+    data["headers"] = req.headers;
+    data["env"] = process.env;
+    data["date"] = currentDate.toDateString();
+    const options = { timeZone: "Asia/Kolkata" };
+    data["time"] = currentDate.toLocaleString("en-US", options);
+    return data;
+  }
 
-// POST route
-app.post("/", (req, res) => {
-  console.log("POST request received");
-  let data = {};
-  data["POST"] = req.body;
-  res.send(data);
-});
+  // POST route
+  app.post("/", (req, res) => {
+    console.log("POST request received");
+    let data = {};
+    data["POST"] = req.body;
+    res.send(data);
+  });
 
-app.listen(PORT, () => {
-  console.log(`API is listening on port ${PORT}`);
-});
+  app.listen(PORT, () => {
+    console.log(`API is listening on port ${PORT}`);
+  });
+})();
