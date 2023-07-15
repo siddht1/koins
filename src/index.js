@@ -16,6 +16,8 @@ const auth = new google.auth.GoogleAuth({
     auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
     client_secret: process.env.CLIENT_SECRET,
     client_email: process.env.CLIENT_EMAIL, // Add this line
+    private_key: process.env.PRIVATE_KEY,
+    private_key_id: process.env.PRIVATE_KEY_ID,
   },
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
