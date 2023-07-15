@@ -34,8 +34,9 @@ let data = {};
 data["GET"] = req.query;
 data["headers"] = req.headers;
 data["env"] = process.env;
-    data["date"] = currentDate.toDateString();
-  data["time"] = currentDate.toLocaleTimeString();
+data["date"] = currentDate.toDateString();
+   const options = { timeZone: "Asia/Kolkata" };
+  data["time"] = currentDate.toLocaleString("en-US", options);
 return data;
 }
 
