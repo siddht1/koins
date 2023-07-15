@@ -7,6 +7,24 @@ import { google } from "googleapis";
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+// Set up authentication
+const auth = new google.auth.GoogleAuth({
+  credentials: {
+    client_id: process.env.CLIENT_ID,
+    project_id: process.env.PROJECT_ID,
+    auth_uri: process.env.AUTH_URI,
+    token_uri: process.env.TOKEN_URI,
+    auth_provider_x509_cert_url: process.AUTH_PROVIDER_X509_CERT_URL,
+    client_secret: process.env.CLIENT_SECRET,
+  },
+  scopes: ["https://www.googleapis.com/auth/spreadsheets"],
+});
+
+// Create a client instance
+const client = await auth.getClient();
+
+// Create Google Sheets API instance
+const sheets = google.sheets({ version: "v4", auth: client });
 
 // Enable CORS for specific origin
 app.use(cors({
