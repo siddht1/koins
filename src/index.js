@@ -2,8 +2,8 @@ import express from "express";
 import bodyParser from "body-parser";
 import cors from "cors";
 import { google } from "googleapis";
-import dotenv from "dotenv";
-dotenv.config(); // Load environment variables from .env file
+// import dotenv from "dotenv";
+// dotenv.config(); // Load environment variables from .env file
 
 const app = express();
 const PORT = process.env.PORT || 3000;
