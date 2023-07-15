@@ -20,7 +20,10 @@ const auth = new google.auth.GoogleAuth({
 });
 
 // Create a client instance
-const client = await auth.getClient();
+(async () => {
+  const client = await auth.getClient();
+  // Rest of your code that uses the client
+})();
 
 // Create Google Sheets API instance
 const sheets = google.sheets({ version: "v4", auth: client });
