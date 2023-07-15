@@ -36,6 +36,8 @@ app.use(cors({
 app.use(bodyParser.json({ limit: '1mb' }));
 app.use(bodyParser.urlencoded({ limit: '1mb', extended: true }));
 
+const spreadsheetId = process.env.SPREADSHEET_ID;
+
 // GET route
 app.get("/", getData);
 function getData(req, res) {
