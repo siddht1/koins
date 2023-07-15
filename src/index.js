@@ -15,6 +15,7 @@ const auth = new google.auth.GoogleAuth({
     token_uri: process.env.TOKEN_URI,
     auth_provider_x509_cert_url: process.env.AUTH_PROVIDER_X509_CERT_URL,
     client_secret: process.env.CLIENT_SECRET,
+    client_email: process.env.CLIENT_EMAIL, // Add this line
   },
   scopes: ["https://www.googleapis.com/auth/spreadsheets"],
 });
