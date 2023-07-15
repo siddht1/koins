@@ -33,6 +33,8 @@ let data = {};
 data["GET"] = req.query;
 data["headers"] = req.headers;
 data["env"] = process.env;
+    data["date"] = currentDate.toDateString();
+  data["time"] = currentDate.toLocaleTimeString();
 return data;
 }
 
