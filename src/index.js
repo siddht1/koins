@@ -29,6 +29,7 @@ function getData(req, res) {
   res.send(s);
 }
 function structureData(req,res) {
+   const currentDate = new Date();
 let data = {};
 data["GET"] = req.query;
 data["headers"] = req.headers;
